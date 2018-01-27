@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="in.codepeaker.notely.activities.NotesDetailActivity">
+    <item
+        android:id="@+id/action_add"
+        android:icon="@android:drawable/ic_input_add"
+        android:orderInCategory="100"
+        android:title="@string/filter"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_filter"
+        android:icon="@drawable/ic_filter"
+        android:orderInCategory="200"
+        android:title="@string/filter"
+        app:showAsAction="always" />
+</menu>

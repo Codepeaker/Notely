@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/size_40"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="in.codepeaker.notely.activities.NotesEditActivity"
+    tools:showIn="@layout/activity_notes_add">
+
+    <EditText
+        android:id="@+id/notes_add_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/enter_the_title_here"
+        android:maxLength="120"
+        android:textSize="@dimen/textsize_26" />
+
+    <EditText
+        android:id="@+id/notes_add_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notes_add_title"
+        android:layout_marginTop="@dimen/size_20"
+        android:background="@android:color/transparent"
+        android:hint="@string/here_goes_your_description"
+        android:textSize="@dimen/textsize_14" />
+</RelativeLayout>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/behind_views"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_red_light"
+        android:gravity="end|center_vertical"
+        android:paddingEnd="@dimen/size_20"
+        android:paddingStart="@dimen/size_20">
+
+        <ImageView
+            android:id="@+id/delete_image"
+            android:layout_width="@dimen/size_0"
+            android:layout_height="@dimen/size_25"
+            android:layout_alignEnd="@id/delete_text"
+            android:layout_alignLeft="@id/delete_text"
+            android:layout_alignRight="@id/delete_text"
+            android:layout_alignStart="@id/delete_text"
+            android:src="@drawable/ic_waste" />
+
+        <TextView
+            android:id="@+id/delete_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/delete_image"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/size_3"
+            android:text="@string/delete"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textsize_16" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/notes_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/notes_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_30"
+            android:maxLength="50"
+            android:paddingEnd="@dimen/size_0"
+            android:paddingLeft="@dimen/size_20"
+            android:paddingRight="@dimen/size_0"
+            android:paddingStart="@dimen/size_20"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textsize_18"
+            android:textStyle="bold"
+            tools:text="And then there were none" />
+
+        <TextView
+            android:id="@+id/notes_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notes_title"
+            android:layout_marginTop="@dimen/size_5"
+            android:maxLength="50"
+            android:paddingEnd="@dimen/size_0"
+            android:paddingLeft="@dimen/size_20"
+            android:paddingRight="@dimen/size_0"
+            android:paddingStart="@dimen/size_20"
+            android:singleLine="true"
+            android:textSize="@dimen/textsize_14"
+            tools:text="SOme description here" />
+
+        <TextView
+            android:id="@+id/last_updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notes_desc"
+            android:layout_marginTop="@dimen/size_5"
+            android:maxLength="50"
+            android:paddingEnd="@dimen/size_0"
+            android:paddingLeft="@dimen/size_20"
+            android:paddingRight="@dimen/size_0"
+            android:paddingStart="@dimen/size_20"
+            android:singleLine="true"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/textsize_12"
+            tools:text="Today at 12:03pm" />
+
+        <ImageView
+            android:id="@+id/fav_icon_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/size_10"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_30"
+            android:src="@drawable/ic_fav_gold" />
+
+        <ImageView
+            android:id="@+id/star_icon_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+
+            android:layout_marginTop="@dimen/size_30"
+            android:layout_toLeftOf="@+id/fav_icon_id"
+            android:layout_toStartOf="@+id/fav_icon_id"
+            android:src="@drawable/ic_star_gold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_01"
+            android:layout_below="@id/last_updated"
+            android:layout_marginTop="@dimen/size_30"
+            android:background="@android:color/darker_gray" />
+    </RelativeLayout>
+
+
+</FrameLayout>
