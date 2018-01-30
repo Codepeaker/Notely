@@ -1,6 +1,7 @@
 package in.codepeaker.notely.activities;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,9 +19,11 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.codepeaker.notely.R;
+import in.codepeaker.notely.adapter.SwipeableWithButtonExampleAdapter;
 import in.codepeaker.notely.contentprovider.NotesContract;
 import in.codepeaker.notely.data.NotesData;
 import in.codepeaker.notely.utils.Constant;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static in.codepeaker.notely.contentprovider.NotesContract.NotesEntry.COLUMN_DESC;
 import static in.codepeaker.notely.contentprovider.NotesContract.NotesEntry.COLUMN_FAV;
@@ -38,9 +41,17 @@ public class NotesEditActivity extends AppCompatActivity implements RunDo.TextLi
 
     @BindView(R.id.notes_add_title)
     EditText notesTitleEditText;
+
     boolean isEditNote = false;
     NotesData notesData;
     private RunDo runDo;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +123,7 @@ public class NotesEditActivity extends AppCompatActivity implements RunDo.TextLi
                     if (notesData != null) {
                         contentValues.put(COLUMN_TITLE, title);
                         contentValues.put(COLUMN_DESC, desc);
-                        contentValues.put(COLUMN_LAST_UPDATED,new Date().getTime()); //TODO change to int
+                        contentValues.put(COLUMN_LAST_UPDATED, new Date().getTime()); //TODO change to int
                         contentValues.put(COLUMN_FAV, notesData.getIsFav());
                         contentValues.put(COLUMN_STARRED, notesData.getIsStarred());
                         contentValues.put(COLUMN_STORY, notesData.getIsStory());
@@ -123,17 +134,28 @@ public class NotesEditActivity extends AppCompatActivity implements RunDo.TextLi
 
                         int notesUpdated = getContentResolver().update(uri, contentValues, null, null);
 
-                        if (notesUpdated > 0)
+                        if (notesUpdated > 0) {
+                            notesData.setNotesTitle(title);
+                            notesData.setNotesDesc(desc);
+                            notesData.setNotesLastUpdate(SwipeableWithButtonExampleAdapter
+                                    .getDateStringfromMilliseconds(new Date().getTime()));
+
+                            setResult(RESULT_OK, new Intent().putExtra(Constant.notesData, notesData));
+
                             Toast.makeText(this, notesUpdated + " note is updated", Toast.LENGTH_SHORT).show();
-                        else {
+
+                        } else {
+                            setResult(RESULT_CANCELED);
                             Toast.makeText(this, "Unable to update note", Toast.LENGTH_SHORT).show();
                         }
+
                     }
 
                 } else {
 
                     contentValues.put(COLUMN_TITLE, title);
                     contentValues.put(COLUMN_DESC, desc);
+
                     contentValues.put(COLUMN_LAST_UPDATED, new Date().getTime());
                     Uri uri = getContentResolver().insert(CONTENT_URI, contentValues);
                     if (uri != null)
@@ -147,11 +169,6 @@ public class NotesEditActivity extends AppCompatActivity implements RunDo.TextLi
 
         }
         return true;
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-
     }
 
     @Override

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,8 +15,8 @@
 
         <ImageView
             android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/size_25"
+            android:layout_height="@dimen/size_25"
             android:src="@drawable/ic_back_image" />
 
         <TextView
@@ -28,19 +30,20 @@
             android:background="@android:color/transparent"
             android:gravity="center"
             android:text="@string/edit"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/textsize_16" />
+            android:textColor="@android:color/background_dark"
+            android:textSize="@dimen/textsize_14" />
 
         <TextView
             android:id="@+id/notes_detail_title"
+            fontPath="fonts/candy.otf"
             android:layout_width="@dimen/size_200"
             android:layout_height="wrap_content"
             android:layout_below="@id/back_button"
             android:layout_marginLeft="@dimen/size_40"
             android:layout_marginStart="@dimen/size_40"
-            android:text="And then there were none"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/textsize_26" />
+            android:textSize="@dimen/textsize_70"
+            tools:text="And then there were none" />
 
         <TextView
             android:id="@+id/notes_detail_last_updated"
@@ -50,14 +53,14 @@
             android:layout_marginLeft="@dimen/size_40"
             android:layout_marginStart="@dimen/size_40"
             android:layout_marginTop="@dimen/size_10"
-            android:text="Last Updated. Today 6:30 pm"
             android:textColor="@color/darker_grey"
-            android:textSize="@dimen/textsize_12" />
+            android:textSize="@dimen/textsize_12"
+            tools:text="Last Updated. Today 6:30 pm" />
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,10 +74,10 @@
             <TextView
                 android:id="@+id/notes_detail_desc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm "
-                android:textColor="@color/darker_grey"
-                android:textSize="@dimen/textsize_16" />
+                android:layout_height="match_parent"
+                android:textColor="@color/darker_grey_two"
+                android:textSize="@dimen/textsize_16"
+                tools:text="Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm Lorem Empusm " />
         </LinearLayout>
     </ScrollView>
 

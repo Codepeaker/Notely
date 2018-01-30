@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:paddingTop="15dp"
     android:id="@+id/filter_layout_id"
-    android:paddingBottom="15dp"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/size_15"
+    android:paddingTop="@dimen/size_15">
 
     <TextView
         android:id="@+id/filter_text"
@@ -13,15 +13,15 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/filter_tick"
         android:layout_alignTop="@+id/filter_tick"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textColor="@color/light_grey"
+        android:textSize="@dimen/textsize_14"
         tools:text="asd" />
 
     <ImageView
         android:id="@+id/filter_tick"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/size_15"
+        android:layout_height="@dimen/size_15"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_tick" />
+        android:src="@drawable/ic_not_checked" />
 </RelativeLayout>

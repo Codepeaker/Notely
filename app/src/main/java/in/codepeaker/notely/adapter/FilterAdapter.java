@@ -1,11 +1,14 @@
 package in.codepeaker.notely.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -38,8 +41,6 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
-
         holder.filterText.setText(filterNames[position]);
     }
 
@@ -55,10 +56,12 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView filterText;
+        ImageView filterTick;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             filterText = itemView.findViewById(R.id.filter_text);
+            filterTick = itemView.findViewById(R.id.filter_tick);
 
             itemView.setOnClickListener(this);
         }
@@ -66,12 +69,25 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.MyViewHold
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.filter_layout_id) {
+
+                //can be removed as soon as poem and story option are available
+                if (getAdapterPosition() == 2 || getAdapterPosition() == 3) {
+                    Toast.makeText(context, R.string.filter_not_available, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (!hashMap.get(getAdapterPosition())) {
                     hashMap.put(getAdapterPosition(), true);
+                    filterText.setTextColor(ContextCompat.getColor(context, R.color.green_blue));
+                    filterTick.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked));
                 } else {
                     hashMap.put(getAdapterPosition(), false);
+                    filterText.setTextColor(ContextCompat.getColor(context, android.R.color.white));
+                    filterTick.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_not_checked));
                 }
                 ((InteractionListener) context).getDrawerListMap(hashMap);
+
+
             }
         }
     }

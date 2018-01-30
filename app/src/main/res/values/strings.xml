@@ -14,4 +14,7 @@
     <string name="here_goes_your_description">Here goes your description</string>
     <string name="edit">EDIT</string>
     <string name="saved_successfully">Note saved successfully</string>
+    <string name="apply">Apply</string>
+    <string name="filter_not_available">Poems and Stories filters are not available right now</string>
+    <string name="notely">Notely</string>
 </resources>

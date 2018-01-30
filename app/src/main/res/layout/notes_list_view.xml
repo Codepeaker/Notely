@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/delete_image"
-            android:layout_width="@dimen/size_0"
-            android:layout_height="@dimen/size_25"
+            android:layout_width="@dimen/size_10"
+            android:layout_height="@dimen/size_20"
             android:layout_alignEnd="@id/delete_text"
             android:layout_alignLeft="@id/delete_text"
             android:layout_alignRight="@id/delete_text"
@@ -28,10 +28,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/delete_image"
             android:layout_centerVertical="true"
-            android:padding="@dimen/size_3"
+            android:padding="@dimen/size_10"
             android:text="@string/delete"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/textsize_16" />
+            android:textSize="@dimen/textsize_12" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/notes_title"
             android:layout_marginTop="@dimen/size_5"
-            android:maxLength="50"
+            android:maxLength="30"
             android:paddingEnd="@dimen/size_0"
             android:paddingLeft="@dimen/size_20"
             android:paddingRight="@dimen/size_0"
@@ -89,8 +89,8 @@
 
         <ImageView
             android:id="@+id/fav_icon_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/size_25"
+            android:layout_height="@dimen/size_25"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/size_10"
@@ -100,11 +100,11 @@
 
         <ImageView
             android:id="@+id/star_icon_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/size_25"
+            android:layout_height="@dimen/size_25"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="@dimen/size_15"
+            android:layout_marginRight="@dimen/size_15"
 
             android:layout_marginTop="@dimen/size_30"
             android:layout_toLeftOf="@+id/fav_icon_id"
@@ -118,6 +118,7 @@
             android:layout_marginTop="@dimen/size_30"
             android:background="@android:color/darker_gray" />
     </RelativeLayout>
+
 
 
 </FrameLayout>

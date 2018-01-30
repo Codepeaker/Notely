@@ -207,4 +207,6 @@
     <dimen name="size_28">28dp</dimen>
     <dimen name="size_315">315dp</dimen>
     <dimen name="size_52">52dp</dimen>
+    <dimen name="textsize_50">50sp</dimen>
+    <dimen name="textsize_70">70sp</dimen>
 </resources><!--<dimen name="design_fab_size_normal">90dp</dimen>--><!--<dimen name="design_fab_size_mini">30dp</dimen>-->

@@ -38,7 +38,7 @@ import static in.codepeaker.notely.contentprovider.NotesContract.NotesEntry.CONT
 /**
  * Created by github.com/codepeaker on 24/1/18.
  */
-public class SwipeableWithButtonExampleFragment extends Fragment {
+public class SwipeableWithButtonFragment extends Fragment {
 
     public static final int REQUEST_ADD_CODE = 124;
     public SwipeableWithButtonExampleAdapter myItemAdapter;
@@ -49,7 +49,7 @@ public class SwipeableWithButtonExampleFragment extends Fragment {
     private RecyclerViewSwipeManager mRecyclerViewSwipeManager;
     private RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager;
 
-    public SwipeableWithButtonExampleFragment() {
+    public SwipeableWithButtonFragment() {
         super();
     }
 

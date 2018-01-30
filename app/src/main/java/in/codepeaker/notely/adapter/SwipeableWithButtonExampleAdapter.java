@@ -23,6 +23,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemView
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 import in.codepeaker.notely.R;
@@ -49,7 +50,8 @@ public class SwipeableWithButtonExampleAdapter
     private static final String TAG = "MySwipeableItemAdapter";
     public Cursor mCursor;
     Context context;
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd", Locale.ENGLISH);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy", Locale.ENGLISH);
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
     private boolean[] pinnedArray;
     private EventListener mEventListener;
     private View.OnClickListener mSwipeableViewContainerOnClickListener;
@@ -99,7 +101,9 @@ public class SwipeableWithButtonExampleAdapter
         notesData.setId(mCursor.getInt(idIndex));
         notesData.setNotesDesc(mCursor.getString(descriptionIndex));
         notesData.setNotesTitle(mCursor.getString(titleIndex));
-        notesData.setNotesLastUpdate(dateFormat.format(mCursor.getInt(dateTime)));
+        notesData.setNotesLastUpdate(
+                getDateStringfromMilliseconds(mCursor.getLong(dateTime))
+        );
         notesData.setIsFav(mCursor.getInt(favIndex) != 0);
         notesData.setIsStarred(mCursor.getInt(starIndex) != 0);
 
@@ -142,7 +146,7 @@ public class SwipeableWithButtonExampleAdapter
         int titleIndex = mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE);
         int favIndex = mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_FAV);
         int starIndex = mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_STARRED);
-        int dateTime = mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_LAST_UPDATED);
+        int dateTimeIndex = mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_LAST_UPDATED);
 //        int storyIndex = mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE);
 //        int poemIndex = mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE);
 
@@ -154,8 +158,9 @@ public class SwipeableWithButtonExampleAdapter
         String title = mCursor.getString(titleIndex);
         int fav = mCursor.getInt(favIndex);
         int star = mCursor.getInt(starIndex);
+        String dateString = getDateStringfromMilliseconds(mCursor.getLong(dateTimeIndex));
 
-        String dateString = dateFormat.format(dateTime);
+        holder.notesLastUpdated.setText(dateString);
         //Set values
         holder.itemView.setTag(id);
 
@@ -167,7 +172,7 @@ public class SwipeableWithButtonExampleAdapter
         // set text
         holder.notesTitle.setText(title);
         holder.notesDesc.setText(description);
-        holder.notesLastUpdated.setText(dateString);
+
         if (star == 0)
             holder.starImageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_star_grey));
         else
@@ -178,7 +183,6 @@ public class SwipeableWithButtonExampleAdapter
         else
             holder.favImageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_fav_gold));
 
-
         // set swiping properties
         holder.setMaxLeftSwipeAmount(-0.30f);
         holder.setMaxRightSwipeAmount(0);
@@ -186,15 +190,48 @@ public class SwipeableWithButtonExampleAdapter
             pinnedArray = new boolean[mCursor.getCount()];
         }
         holder.setSwipeItemHorizontalSlideAmount(pinnedArray[position] ? -0.30f : 0);
+    }
 
-        // Or, it can be specified in pixels instead of proportional value.
-        // float density = holder.itemView.getResources().getDisplayMetrics().density;
-        // float pinnedDistance = (density * 100); // 100 dp
+    public static String getDateStringfromMilliseconds(long aLong) {
 
-        // holder.setProportionalSwipeAmountModeEnabled(false);
-        // holder.setMaxLeftSwipeAmount(-pinnedDistance);
-        // holder.setMaxRightSwipeAmount(0);
-        // holder.setSwipeItemHorizontalSlideAmount(item.isPinned() ? -pinnedDistance: 0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(aLong);
+
+        long noteYear = calendar.get(Calendar.YEAR);
+        long noteWeek = calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+        long noteMonth = calendar.get(Calendar.MONTH);
+        long noteDate = calendar.get(Calendar.DATE);
+
+        Calendar calendar1 = Calendar.getInstance();
+        long currentYear = calendar1.get(Calendar.YEAR);
+        long currentWeek = calendar1.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+        long currentMonth = calendar1.get(Calendar.MONTH);
+        long currentDate = calendar1.get(Calendar.DATE);
+
+
+        if (noteDate == currentDate) {
+            SimpleDateFormat simpleDateFormat3 =
+                    new SimpleDateFormat("'Today at 'K:mm a", Locale.ENGLISH);
+            return simpleDateFormat3.format(calendar.getTime());
+        }
+        if (noteWeek == currentWeek) {
+            SimpleDateFormat simpleDateFormat2 =
+                    new SimpleDateFormat("E' at 'K:mm a", Locale.ENGLISH);
+            return simpleDateFormat2.format(calendar.getTime());
+
+        }
+
+        if (noteYear == currentYear) {
+            SimpleDateFormat simpleDateFormat =
+                    new SimpleDateFormat("MMM dd' at 'K:mm a", Locale.ENGLISH);
+            return simpleDateFormat.format(calendar.getTime());
+
+        } else {
+            SimpleDateFormat simpleDateFormat =
+                    new SimpleDateFormat("MMM dd yyyy' at 'K:mm a", Locale.ENGLISH);
+            return simpleDateFormat.format(calendar.getTime());
+        }
+
     }
 
     @Override
@@ -378,14 +415,13 @@ public class SwipeableWithButtonExampleAdapter
                     String title = mCursor.getString(mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE));
                     int fav = mCursor.getInt(mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_FAV));
                     int star = mCursor.getInt(mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_STARRED));
-                    int lastUpdated = mCursor.getInt(mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_LAST_UPDATED));
+                    long lastUpdated = mCursor.getLong(mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_LAST_UPDATED));
 
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(_ID, id);
                     contentValues.put(COLUMN_DESC, description);
                     contentValues.put(COLUMN_FAV, fav);
                     contentValues.put(COLUMN_TITLE, title);
-//                    contentValues.put(COLUMN_LAST_UPDATED, new Date().getTime());
                     contentValues.put(COLUMN_LAST_UPDATED, lastUpdated);
 
 
@@ -415,7 +451,7 @@ public class SwipeableWithButtonExampleAdapter
                     String title = mCursor.getString(mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_TITLE));
                     int fav = mCursor.getInt(mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_FAV));
                     int star = mCursor.getInt(mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_STARRED));
-                    int lastUpdated = mCursor.getInt(mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_LAST_UPDATED));
+                    long lastUpdated = mCursor.getLong(mCursor.getColumnIndex(NotesContract.NotesEntry.COLUMN_LAST_UPDATED));
 
                     ContentValues contentValues = new ContentValues();
                     contentValues.put(_ID, id);

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/size_40"
+    tools:ignore="MissingPrefix"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="in.codepeaker.notely.activities.NotesEditActivity"
     tools:showIn="@layout/activity_notes_add">
@@ -12,11 +13,12 @@
     <EditText
         android:id="@+id/notes_add_title"
         android:layout_width="match_parent"
+        fontPath= "fonts/candy.otf"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:hint="@string/enter_the_title_here"
         android:maxLength="120"
-        android:textSize="@dimen/textsize_26" />
+        android:textSize="@dimen/textsize_70" />
 
     <EditText
         android:id="@+id/notes_add_description"
