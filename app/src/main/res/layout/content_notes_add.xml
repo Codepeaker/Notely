@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:hint="@string/enter_the_title_here"
-        android:maxLength="120"
+
+        android:maxLength="80"
         android:textSize="@dimen/textsize_70" />
 
     <EditText
@@ -25,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/notes_add_title"
+
         android:layout_marginTop="@dimen/size_20"
         android:background="@android:color/transparent"
         android:hint="@string/here_goes_your_description"

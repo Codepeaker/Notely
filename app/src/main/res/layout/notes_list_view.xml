@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <RelativeLayout
         android:id="@+id/behind_views"
         android:layout_width="match_parent"
@@ -42,10 +43,11 @@
 
         <TextView
             android:id="@+id/notes_title"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/size_250"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_30"
-            android:maxLength="50"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:paddingEnd="@dimen/size_0"
             android:paddingLeft="@dimen/size_20"
             android:paddingRight="@dimen/size_0"
@@ -58,11 +60,12 @@
 
         <TextView
             android:id="@+id/notes_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/size_250"
             android:layout_height="wrap_content"
             android:layout_below="@id/notes_title"
             android:layout_marginTop="@dimen/size_5"
-            android:maxLength="30"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:paddingEnd="@dimen/size_0"
             android:paddingLeft="@dimen/size_20"
             android:paddingRight="@dimen/size_0"
@@ -118,7 +121,6 @@
             android:layout_marginTop="@dimen/size_30"
             android:background="@android:color/darker_gray" />
     </RelativeLayout>
-
 
 
 </FrameLayout>
