@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,6 +79,47 @@ public class SwipeableWithButtonExampleAdapter
         // SwipeableItemAdapter requires stable ID, and also
         // have to implement the getItemId() method appropriately.
         setHasStableIds(true);
+    }
+
+    public static String getDateStringfromMilliseconds(long aLong) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(aLong);
+
+        long noteYear = calendar.get(Calendar.YEAR);
+        long noteWeek = calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+        long noteMonth = calendar.get(Calendar.MONTH);
+        long noteDate = calendar.get(Calendar.DATE);
+
+        Calendar calendar1 = Calendar.getInstance();
+        long currentYear = calendar1.get(Calendar.YEAR);
+        long currentWeek = calendar1.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+        long currentDate = calendar1.get(Calendar.DATE);
+
+
+        if (noteDate == currentDate) {
+            SimpleDateFormat simpleDateFormat3 =
+                    new SimpleDateFormat("'Today at 'K:mm a", Locale.ENGLISH);
+            return simpleDateFormat3.format(calendar.getTime());
+        }
+        if (noteWeek == currentWeek) {
+            SimpleDateFormat simpleDateFormat2 =
+                    new SimpleDateFormat("E' at 'K:mm a", Locale.ENGLISH);
+            return simpleDateFormat2.format(calendar.getTime());
+
+        }
+
+        if (noteYear == currentYear) {
+            SimpleDateFormat simpleDateFormat =
+                    new SimpleDateFormat("MMM dd' at 'K:mm a", Locale.ENGLISH);
+            return simpleDateFormat.format(calendar.getTime());
+
+        } else {
+            SimpleDateFormat simpleDateFormat =
+                    new SimpleDateFormat("MMM dd yyyy' at 'K:mm a", Locale.ENGLISH);
+            return simpleDateFormat.format(calendar.getTime());
+        }
+
     }
 
     private void onSwipeableViewContainerClick(View v) {
@@ -160,6 +202,8 @@ public class SwipeableWithButtonExampleAdapter
         int star = mCursor.getInt(starIndex);
         String dateString = getDateStringfromMilliseconds(mCursor.getLong(dateTimeIndex));
 
+        ViewCompat.setTransitionName(holder.notesTitle,position+"");
+
         holder.notesLastUpdated.setText(dateString);
         //Set values
         holder.itemView.setTag(id);
@@ -190,48 +234,6 @@ public class SwipeableWithButtonExampleAdapter
             pinnedArray = new boolean[mCursor.getCount()];
         }
         holder.setSwipeItemHorizontalSlideAmount(pinnedArray[position] ? -0.30f : 0);
-    }
-
-    public static String getDateStringfromMilliseconds(long aLong) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(aLong);
-
-        long noteYear = calendar.get(Calendar.YEAR);
-        long noteWeek = calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-        long noteMonth = calendar.get(Calendar.MONTH);
-        long noteDate = calendar.get(Calendar.DATE);
-
-        Calendar calendar1 = Calendar.getInstance();
-        long currentYear = calendar1.get(Calendar.YEAR);
-        long currentWeek = calendar1.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-        long currentMonth = calendar1.get(Calendar.MONTH);
-        long currentDate = calendar1.get(Calendar.DATE);
-
-
-        if (noteDate == currentDate) {
-            SimpleDateFormat simpleDateFormat3 =
-                    new SimpleDateFormat("'Today at 'K:mm a", Locale.ENGLISH);
-            return simpleDateFormat3.format(calendar.getTime());
-        }
-        if (noteWeek == currentWeek) {
-            SimpleDateFormat simpleDateFormat2 =
-                    new SimpleDateFormat("E' at 'K:mm a", Locale.ENGLISH);
-            return simpleDateFormat2.format(calendar.getTime());
-
-        }
-
-        if (noteYear == currentYear) {
-            SimpleDateFormat simpleDateFormat =
-                    new SimpleDateFormat("MMM dd' at 'K:mm a", Locale.ENGLISH);
-            return simpleDateFormat.format(calendar.getTime());
-
-        } else {
-            SimpleDateFormat simpleDateFormat =
-                    new SimpleDateFormat("MMM dd yyyy' at 'K:mm a", Locale.ENGLISH);
-            return simpleDateFormat.format(calendar.getTime());
-        }
-
     }
 
     @Override
@@ -389,7 +391,8 @@ public class SwipeableWithButtonExampleAdapter
     public class MyViewHolder extends AbstractSwipeableItemViewHolder {
         public RelativeLayout mContainer;
         public RelativeLayout mBehindViews;
-        public TextView notesTitle, notesDesc, notesLastUpdated;
+        public TextView notesTitle;
+        TextView notesDesc, notesLastUpdated;
         ImageView starImageView, favImageView;
 
         public MyViewHolder(View v) {
@@ -483,4 +486,5 @@ public class SwipeableWithButtonExampleAdapter
         }
 
     }
+
 }

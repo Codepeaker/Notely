@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_layout_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/size_20">
+
+
+    <TextView
+        android:id="@+id/notes_widget_title_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/size_10"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/textsize_26"
+        android:textStyle="bold"
+        android:visibility="visible"
+        tools:text="Notes Title" />
+
+
+    <TextView
+        android:id="@+id/notes_widget_desc_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notes_widget_title_id"
+        android:gravity="center"
+        android:padding="@dimen/size_10"
+        android:textColor="@color/darker_grey_two"
+        android:textSize="@dimen/textsize_18"
+        android:textStyle="bold"
+        android:visibility="visible"
+        tools:text="Notes Description" />
+
+
+    <!-- Empty view is show if list items are empty -->
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_widget_make_one"
+        android:textColor="#000"
+        android:textSize="20sp" />
+</RelativeLayout>

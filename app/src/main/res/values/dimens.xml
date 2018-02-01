@@ -209,4 +209,10 @@
     <dimen name="size_52">52dp</dimen>
     <dimen name="textsize_50">50sp</dimen>
     <dimen name="textsize_70">70sp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
 </resources><!--<dimen name="design_fab_size_normal">90dp</dimen>--><!--<dimen name="design_fab_size_mini">30dp</dimen>-->

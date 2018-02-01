@@ -7,17 +7,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.werdpressed.partisan.rundo.RunDo;
 
 import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import in.codepeaker.notely.BuildConfig;
 import in.codepeaker.notely.R;
 import in.codepeaker.notely.adapter.SwipeableWithButtonExampleAdapter;
 import in.codepeaker.notely.contentprovider.NotesContract;
@@ -45,13 +50,12 @@ public class NotesEditActivity extends AppCompatActivity implements RunDo.TextLi
     boolean isEditNote = false;
     NotesData notesData;
     private RunDo runDo;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,15 @@ public class NotesEditActivity extends AppCompatActivity implements RunDo.TextLi
         if (getIntent().getExtras().getBoolean(Constant.isEditNote)) {
             isEditNote = true;
         }
+
+        MobileAds.initialize(this, BuildConfig.ADDMOB_APP_ID_STRING);
+
+        mInterstitialAd = new InterstitialAd(this);
+//        ca-app-pub-2004734361017408/5451211810 original
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); //test unit
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+
     }
 
     @Override
@@ -108,6 +121,11 @@ public class NotesEditActivity extends AppCompatActivity implements RunDo.TextLi
                 break;
             case R.id.save_note:
 
+                if (mInterstitialAd!=null&&mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    Log.d("TAG", "The interstitial wasn't loaded yet.");
+                }
 
                 String title = notesTitleEditText.getText().toString();
                 String desc = notesDescEditText.getText().toString(); //can be empty

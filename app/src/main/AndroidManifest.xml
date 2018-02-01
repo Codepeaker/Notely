@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="in.codepeaker.notely">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,19 +13,17 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.NotesDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.NotesListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.NotesEditActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"></activity>
 
-        </activity>
+        <service
+            android:name=".service.WidgetUpdateService"
+            android:exported="false" />
 
         <provider
             android:name=".contentprovider.NotesContentProvider"
@@ -37,6 +37,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".NotesWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/notes_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

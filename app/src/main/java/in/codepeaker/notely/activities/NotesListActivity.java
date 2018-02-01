@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +38,7 @@ import in.codepeaker.notely.fragments.SwipeableWithButtonFragment;
 import in.codepeaker.notely.utils.Constant;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAnimation;
 import static in.codepeaker.notely.contentprovider.NotesContract.NotesEntry.COLUMN_FAV;
 import static in.codepeaker.notely.contentprovider.NotesContract.NotesEntry.COLUMN_LAST_UPDATED;
 import static in.codepeaker.notely.contentprovider.NotesContract.NotesEntry.COLUMN_STARRED;
@@ -42,12 +46,14 @@ import static in.codepeaker.notely.contentprovider.NotesContract.NotesEntry.CONT
 
 
 public class NotesListActivity extends AppCompatActivity implements FilterAdapter.InteractionListener,
-        LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
+        LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener{
 
 
     public static final int NOTES_LOADER_ID = 10;
+
     @BindView(R.id.drawer_layout)
     public DrawerLayout drawer;
+
     @BindView(R.id.filter_apply_button)
     Button applyButton;
 
@@ -55,6 +61,7 @@ public class NotesListActivity extends AppCompatActivity implements FilterAdapte
     ImageView clearFilterButton;
 
     HashMap<Integer, Boolean> hashMap = new HashMap<>();
+    FilterAdapter filterAdapter;
     private String FRAGMENT_LIST_VIEW = "listview";
     private String TAG = NotesListActivity.class.getSimpleName();
 
@@ -62,7 +69,6 @@ public class NotesListActivity extends AppCompatActivity implements FilterAdapte
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,18 +86,20 @@ public class NotesListActivity extends AppCompatActivity implements FilterAdapte
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.sliding_pane_container, new SwipeableWithButtonFragment(), FRAGMENT_LIST_VIEW)
                     .commit();
-        }
+            //Drawer view
 
-        //Drawer view
+            getSupportLoaderManager().initLoader(NOTES_LOADER_ID, null, this);
+        }
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(NotesListActivity.this));
+
         String[] filterNames = {"Hearted", "Favourites", "Poems", "Stories"};
-        FilterAdapter filterAdapter = new FilterAdapter(NotesListActivity.this, filterNames);
+        filterAdapter = new FilterAdapter(NotesListActivity.this, filterNames);
         recyclerView.setAdapter(filterAdapter);
         applyButton.setOnClickListener(this);
         clearFilterButton.setOnClickListener(this);
 
-        getSupportLoaderManager().initLoader(NOTES_LOADER_ID, null, this);
     }
 
     @Override
@@ -106,10 +114,17 @@ public class NotesListActivity extends AppCompatActivity implements FilterAdapte
     public void onItemPinned(int position) {
     }
 
-    public void onItemClicked(NotesData notesData) {
+
+    public void onItemClicked(NotesData notesData, int position, TextView textView) {
         Intent intent = new Intent(NotesListActivity.this, NotesDetailActivity.class);
         intent.putExtra(Constant.notesData, notesData);
-        startActivity(intent);
+        intent.putExtra(Constant.notesPosition, position);
+
+        ActivityOptionsCompat activityOptionsCompat = makeSceneTransitionAnimation(NotesListActivity.this
+                , textView
+                , ViewCompat.getTransitionName(textView));
+        startActivity(intent,activityOptionsCompat.toBundle());
+
     }
 
     public void onItemButtonClicked(NotesData notesData) {
@@ -135,7 +150,6 @@ public class NotesListActivity extends AppCompatActivity implements FilterAdapte
 
         }
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -264,4 +278,6 @@ public class NotesListActivity extends AppCompatActivity implements FilterAdapte
         }
 
     }
+
+
 }

@@ -9,5 +9,6 @@ public class Constant {
 
     public static java.lang.String title = "TITLE";
     public static java.lang.String desc = "DESC";
-    public static String notesData = "NOTES_DATA";
+    public static String notesData = "NOTES_POSITION";
+    public static String notesPosition = "NOTES";
 }

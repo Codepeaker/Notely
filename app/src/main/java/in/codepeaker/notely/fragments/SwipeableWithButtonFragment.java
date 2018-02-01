@@ -3,11 +3,11 @@ package in.codepeaker.notely.fragments;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
@@ -54,7 +55,9 @@ public class SwipeableWithButtonFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_recycler_list_view, container, false);
     }
 
@@ -64,8 +67,12 @@ public class SwipeableWithButtonFragment extends Fragment {
 
         //noinspection ConstantConditions
         mRecyclerView = getView().findViewById(R.id.notes_recyclerview);
-        mLayoutManager = new LinearLayoutManager(getContext());
 
+        if (getResources().getBoolean(R.bool.is_tablet)) {
+            mLayoutManager = new GridLayoutManager(getContext(), 2);
+        } else {
+            mLayoutManager = new LinearLayoutManager(getContext());
+        }
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
         mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
         mRecyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
@@ -200,10 +207,12 @@ public class SwipeableWithButtonFragment extends Fragment {
     private void handleOnItemViewClicked(View v) {
         int position = mRecyclerView.getChildAdapterPosition(v);
         if (position != RecyclerView.NO_POSITION) {
-
-            ((NotesListActivity) getActivity()).onItemClicked(myItemAdapter.getNotesData(position));
+            TextView textView = v.findViewById(R.id.notes_title);
+            ((NotesListActivity) getActivity()).onItemClicked(myItemAdapter.getNotesData(position), position,textView);
         }
     }
+
+
 
     private void handleOnUnderSwipeableViewButtonClicked(View v) {
         int position = mRecyclerView.getChildAdapterPosition(v);
@@ -219,7 +228,7 @@ public class SwipeableWithButtonFragment extends Fragment {
                 Uri uri = CONTENT_URI.buildUpon().appendPath(id + "").build();
                 int affectedRows = getActivity().getContentResolver().delete(uri, null, null);
 
-                getActivity().getSupportLoaderManager().restartLoader(NOTES_LOADER_ID, null, ((NotesListActivity)getActivity()));
+                getActivity().getSupportLoaderManager().restartLoader(NOTES_LOADER_ID, null, ((NotesListActivity) getActivity()));
                 Toast.makeText(getActivity(), affectedRows + " row deleted!", Toast.LENGTH_SHORT).show();
             }
 
@@ -228,17 +237,4 @@ public class SwipeableWithButtonFragment extends Fragment {
         }
     }
 
-    private boolean supportsViewElevation() {
-        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-    }
-
-
-    public void notifyItemChanged(int position) {
-        mAdapter.notifyItemChanged(position);
-    }
-
-    public void notifyItemInserted(int position) {
-        mAdapter.notifyItemInserted(position);
-        mRecyclerView.scrollToPosition(position);
-    }
 }

@@ -24,6 +24,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/notely"
                 android:textStyle="bold"
+                android:transitionName="simple_splash_transition"
+                tools:ignore="UnusedAttribute"
                 fontPath= "fonts/candy.otf"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/textsize_50"/>
