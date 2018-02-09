@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.codepeaker.notely.NotesWidgetProvider;
@@ -23,6 +25,7 @@ import in.codepeaker.notely.R;
 import in.codepeaker.notely.data.NotesData;
 import in.codepeaker.notely.service.WidgetUpdateService;
 import in.codepeaker.notely.utils.Constant;
+import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NotesDetailActivity extends AppCompatActivity {
@@ -55,19 +58,15 @@ public class NotesDetailActivity extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_notes_detail);
 
         ButterKnife.bind(this);
 
         initAction();
-
-//      ca-app-pub-2004734361017408~3549126724
-
-
     }
 
     private void initAction() {
@@ -78,7 +77,6 @@ public class NotesDetailActivity extends AppCompatActivity {
 
         if (notesData == null)
             return;
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notesTitle.setTransitionName(notesPosition + "");
@@ -100,7 +98,7 @@ public class NotesDetailActivity extends AppCompatActivity {
                         notesTitle,
                         "simple_title_animation"
                 );
-                startActivityForResult(intent, REQUEST_CODE_FOR_EDIT_SCREEN,activityOptionsCompat.toBundle());
+                startActivityForResult(intent, REQUEST_CODE_FOR_EDIT_SCREEN, activityOptionsCompat.toBundle());
             }
         });
 

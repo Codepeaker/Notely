@@ -23,5 +23,6 @@
         android:layout_height="@dimen/size_15"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_not_checked" />
+        android:src="@drawable/ic_not_checked"
+        android:contentDescription="@string/filter_adapter_tick" />
 </RelativeLayout>

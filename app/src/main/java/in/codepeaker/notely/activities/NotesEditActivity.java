@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
@@ -28,6 +29,7 @@ import in.codepeaker.notely.adapter.SwipeableWithButtonExampleAdapter;
 import in.codepeaker.notely.contentprovider.NotesContract;
 import in.codepeaker.notely.data.NotesData;
 import in.codepeaker.notely.utils.Constant;
+import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static in.codepeaker.notely.contentprovider.NotesContract.NotesEntry.COLUMN_DESC;
@@ -60,6 +62,7 @@ public class NotesEditActivity extends AppCompatActivity implements RunDo.TextLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_notes_add);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

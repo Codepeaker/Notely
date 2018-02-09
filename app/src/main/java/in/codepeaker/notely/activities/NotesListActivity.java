@@ -24,6 +24,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +38,7 @@ import in.codepeaker.notely.contentprovider.NotesContract;
 import in.codepeaker.notely.data.NotesData;
 import in.codepeaker.notely.fragments.SwipeableWithButtonFragment;
 import in.codepeaker.notely.utils.Constant;
+import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAnimation;
@@ -73,6 +76,7 @@ public class NotesListActivity extends AppCompatActivity implements FilterAdapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
